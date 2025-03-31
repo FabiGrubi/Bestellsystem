@@ -1,0 +1,33 @@
+CREATE DATABASE IF NOT EXISTS bestellsystem;
+USE bestellsystem;
+
+CREATE TABLE IF NOT EXISTS kunden (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nachname VARCHAR(50) NOT NULL,
+    vorname VARCHAR(50) NOT NULL,
+    telefon VARCHAR(50),
+    email VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS bestellung (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_kunde INT NOT NULL,
+    datum DATETIME NOT NULL,
+    FOREIGN KEY (id_kunde) REFERENCES kunden(id)
+);
+
+CREATE TABLE IF NOT EXISTS artikel (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    bezeichnung VARCHAR(255) NOT NULL,
+    preis_netto DECIMAL(10,2) NOT NULL,
+    ust_satz DECIMAL(3,2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS bestelldetails (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_artikel INT NOT NULL,
+    id_bestellung INT NOT NULL,
+    menge INT NOT NULL,
+    FOREIGN KEY (id_artikel) REFERENCES artikel(id),
+    FOREIGN KEY (id_bestellung) REFERENCES bestellung(id)
+);
